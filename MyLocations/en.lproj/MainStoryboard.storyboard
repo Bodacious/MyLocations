@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11C74" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
     <dependencies>
         <development defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
@@ -143,6 +143,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <dataDetectorType key="dataDetectorTypes" address="YES"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="1Jj-wE-EyA" id="lYd-eL-WCc"/>
+                                                    </connections>
                                                 </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -216,7 +219,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KpM-e1-dbI">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KpM-e1-dbI">
                                                     <rect key="frame" x="246" y="11" width="44" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -268,8 +271,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="men-6C-9OB">
-                                                    <rect key="frame" x="246" y="8" width="44" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Address" textAlignment="right" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="men-6C-9OB">
+                                                    <rect key="frame" x="227" y="11" width="63" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.2196078431372549" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
@@ -320,15 +323,19 @@
                                 <action selector="cancel:" destination="1Jj-wE-EyA" id="5KB-Ph-fzD"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="wTh-b9-Uvf"/>
+                        <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="wTh-b9-Uvf">
+                            <connections>
+                                <action selector="done:" destination="1Jj-wE-EyA" id="1tS-nX-djc"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addressLabel" destination="oxr-id-Cek" id="mVc-cz-ZNA"/>
-                        <outlet property="categoryLabel" destination="yd5-W1-deV" id="QD9-yn-bGG"/>
-                        <outlet property="dateLabel" destination="L1N-6F-tDI" id="mFm-au-bcL"/>
+                        <outlet property="addressLabel" destination="men-6C-9OB" id="Ta9-81-6ge"/>
+                        <outlet property="categoryLabel" destination="E2O-69-9z3" id="upN-5f-5Xf"/>
+                        <outlet property="dateLabel" destination="2pS-tJ-IHI" id="TdR-gN-a3e"/>
                         <outlet property="descriptionTextView" destination="e4f-m7-EDW" id="pjp-ws-l6G"/>
-                        <outlet property="latitudeLabel" destination="Qhq-Zf-9ta" id="yfR-hl-ARs"/>
-                        <outlet property="longitudeLabel" destination="3WZ-oJ-lyK" id="5Lw-cx-cPb"/>
+                        <outlet property="latitudeLabel" destination="KpM-e1-dbI" id="YP8-oB-ydy"/>
+                        <outlet property="longitudeLabel" destination="usU-8a-Jph" id="TAB-kB-0g8"/>
                     </connections>
                 </tableViewController>
             </objects>

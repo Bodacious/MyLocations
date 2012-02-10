@@ -95,20 +95,20 @@
 		8632A18D14E3120A00B57885 /* MyLocations */ = {
 			isa = PBXGroup;
 			children = (
+				8632A19914E3120A00B57885 /* MainStoryboard.storyboard */,
 				8632A19614E3120A00B57885 /* AppDelegate.h */,
 				8632A19714E3120A00B57885 /* AppDelegate.m */,
-				8632A19914E3120A00B57885 /* MainStoryboard.storyboard */,
 				8632A19C14E3120A00B57885 /* CurrentLocationViewController.h */,
 				8632A19D14E3120A00B57885 /* CurrentLocationViewController.m */,
-				8632A19F14E3120A00B57885 /* first.png */,
-				8632A1A114E3120A00B57885 /* first@2x.png */,
+				8649E8F514E45B4C00445322 /* LocationDetailsViewController.h */,
+				8649E8F614E45B4C00445322 /* LocationDetailsViewController.m */,
 				8632A1A314E3120A00B57885 /* SecondViewController.h */,
 				8632A1A414E3120A00B57885 /* SecondViewController.m */,
+				8632A19F14E3120A00B57885 /* first.png */,
+				8632A1A114E3120A00B57885 /* first@2x.png */,
 				8632A1A614E3120A00B57885 /* second.png */,
 				8632A1A814E3120A00B57885 /* second@2x.png */,
 				8632A18E14E3120A00B57885 /* Supporting Files */,
-				8649E8F514E45B4C00445322 /* LocationDetailsViewController.h */,
-				8649E8F614E45B4C00445322 /* LocationDetailsViewController.m */,
 			);
 			path = MyLocations;
 			sourceTree = "<group>";

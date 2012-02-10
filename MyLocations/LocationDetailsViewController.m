@@ -2,7 +2,9 @@
 
 @implementation LocationDetailsViewController
 
-#pragma mark - Attribute getters and setters
+NSString *descriptionText;
+
+
 @synthesize descriptionTextView;
 @synthesize categoryLabel;
 @synthesize latitudeLabel;
@@ -10,35 +12,17 @@
 @synthesize addressLabel;
 @synthesize dateLabel;
 
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
+@synthesize coordinate;
+@synthesize placemark;
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    if ((self = [super initWithCoder:aDecoder])) {
+        descriptionText = @"";
+    }
+    return self;
 }
 
 - (void)viewDidUnload
@@ -54,113 +38,79 @@
 }
 
 
-- (void)viewWillAppear:(BOOL)animated
+- (NSString *)stringFromPlacemark:(CLPlacemark *)thePlacemark
 {
-    [super viewWillAppear:animated];
+    return [NSString stringWithFormat:@"%@ %@, %@, %@ %@, %@",
+            self.placemark.subThoroughfare, self.placemark.thoroughfare,
+            self.placemark.locality, self.placemark.administrativeArea,
+            self.placemark.postalCode, self.placemark.country];
 }
-
-- (void)viewDidAppear:(BOOL)animated
+- (NSString *)formatDate:(NSDate *)theDate
 {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    static NSDateFormatter *formatter = nil;
+    if (formatter == nil) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterMediumStyle];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
     }
     
-    // Configure the cell...
+    return [formatter stringFromDate:theDate];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
     
-    return cell;
+    self.descriptionTextView.text = descriptionText;
+    self.categoryLabel.text = @"";
+    
+    self.latitudeLabel.text = [NSString stringWithFormat:@"%.8f", self.coordinate.latitude];
+    self.longitudeLabel.text = [NSString stringWithFormat:@"%.8f", self.coordinate.longitude];
+    
+    if (self.placemark != nil){
+        self.addressLabel.text = [self stringFromPlacemark:self.placemark];
+    }
+    else{
+        self.addressLabel.text = @"No Address Found";
+    }
+        
+    self.dateLabel.text = [self formatDate:[NSDate date]];
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        return 88;
+    } else if (indexPath.section == 2 && indexPath.row == 2) {
+        
+        CGRect rect = CGRectMake(100, 10, 190, 1000);
+        self.addressLabel.frame = rect;
+        [self.addressLabel sizeToFit];
+        
+        rect.size.height = self.addressLabel.frame.size.height;
+        self.addressLabel.frame = rect;
+        
+        return self.addressLabel.frame.size.height + 20;
+    } else {
+        return 44;
+    }
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)theTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    descriptionText = [theTextView.text stringByReplacingCharactersInRange:range withString:text];
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)textViewDidEndEditing:(UITextView *)theTextView
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    descriptionText = theTextView.text;
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-}
 
 #pragma mark - Custom Actions
 
@@ -171,6 +121,8 @@
 
 - (IBAction)done:(id)sender
 {
+    NSLog(@"Description '%@'", descriptionText);
+    
     [self closeScreen];
 }
 

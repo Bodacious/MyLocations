@@ -294,4 +294,14 @@ NSError *lastGeocodingError;
         [self.getButton setTitle:@"Get Location" forState:UIControlStateNormal];
     }
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"TagLocation"]){
+        UINavigationController *navigationController = segue.destinationViewController;
+        LocationDetailsViewController *controller = (LocationDetailsViewController *)navigationController.topViewController;
+        controller.coordinate = location.coordinate;
+        controller.placemark = placemark;
+    }
+}
 @end
