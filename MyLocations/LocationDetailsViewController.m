@@ -182,6 +182,8 @@
     HudView *hudView = [HudView hudInView:self.navigationController.view animated:YES];
     hudView.text = @"Tagged";
     
+    NSLog(@"ManagedObjectContext %@", managedObjectContext);
+    
     Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
     
     location.locationDescription = descriptionText;
@@ -193,12 +195,13 @@
     
     NSError *error;
     if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Error: %@", error);
-        abort();
+        FATAL_CORE_DATA_ERROR(error);
+        return;
     }
     
     [self performSelector:@selector(closeScreen) withObject:nil afterDelay:0.6];
 }
+
 - (IBAction)cancel:(id)sender
 {
     [self closeScreen];

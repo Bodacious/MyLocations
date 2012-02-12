@@ -1,4 +1,3 @@
-#import <CoreData/CoreData.h>
 #import "AppDelegate.h"
 #import "CurrentLocationViewController.h"
 
@@ -9,14 +8,19 @@
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate 
 
 @synthesize window = _window;
 @synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    
+    UINavigationController *navigationController = (UINavigationController *)[[tabBarController viewControllers] objectAtIndex:0];
+    CurrentLocationViewController *currentLocationViewController = (CurrentLocationViewController *)[[navigationController viewControllers] objectAtIndex:0];
+    currentLocationViewController.managedObjectContext = self.managedObjectContext;
+    
     return YES;
 }
 							
@@ -109,6 +113,23 @@
         }
     }
     return managedObjectContext;
+}
+
+
+#pragma mark - Exception handling
+
+- (void)fatalCoreDataError:(NSError *)error
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Internal Error", nil) message:NSLocalizedString(@"There was a fatal error in the app and it cannot continue.\n\nPress OK to terminate the app. Sorry for the inconvenience.", nil)delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    
+    [alertView show];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)theAlertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    abort();
 }
 
 @end

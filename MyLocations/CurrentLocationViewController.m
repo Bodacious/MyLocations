@@ -299,6 +299,11 @@ NSError *lastGeocodingError;
     if ([segue.identifier isEqualToString:@"TagLocation"]) {
         UINavigationController *navigationController = segue.destinationViewController;
         LocationDetailsViewController *controller = (LocationDetailsViewController *)navigationController.topViewController;
+        
+        
+        NSLog(@"Current Location View Controller MOC: %@", self.managedObjectContext);
+        NSLog(@"controller: %@", controller);
+        
         controller.managedObjectContext = self.managedObjectContext;
         controller.coordinate = location.coordinate;
         controller.placemark = placemark;
