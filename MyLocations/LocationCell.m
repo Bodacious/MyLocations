@@ -1,10 +1,8 @@
-//  Created by Gavin Morrice on 12/02/2012.
-//  Copyright (c) 2012 Katana Code Ltd. All rights reserved.
-//
-
 #import "LocationCell.h"
 
 @implementation LocationCell
+
+@synthesize addressLabel, descriptionLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
