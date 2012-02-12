@@ -71,6 +71,7 @@
                                 <connections>
                                     <outlet property="addressLabel" destination="ncl-Xa-iXM" id="bvx-Br-rCR"/>
                                     <outlet property="descriptionLabel" destination="YUs-NH-tau" id="f1r-Y4-nU6"/>
+                                    <segue destination="CKR-Mh-sLF" kind="modal" identifier="EditLocation" id="wYB-Qm-zzy"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -404,7 +405,7 @@
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="1436" y="-144"/>
+            <point key="canvasLocation" x="1580" y="284"/>
         </scene>
         <scene sceneID="AD3-E3-APr">
             <objects>
@@ -422,7 +423,7 @@
                     <navigationItem key="navigationItem" title="Choose Category" id="TnS-5m-urF"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="1874" y="-144"/>
+            <point key="canvasLocation" x="2018" y="284"/>
         </scene>
         <scene sceneID="15">
             <objects>
@@ -457,7 +458,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="1004" y="-144"/>
+            <point key="canvasLocation" x="1148" y="284"/>
         </scene>
     </scenes>
     <resources>
@@ -509,4 +510,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="wYB-Qm-zzy"/>
+    </inferredMetricsTieBreakers>
 </document>

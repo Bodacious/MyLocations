@@ -3,6 +3,7 @@
 //
 #import "Location.h"
 #import "LocationsViewController.h"
+#import "LocationDetailsViewController.h"
 #import "LocationCell.h"
 
 @implementation LocationsViewController{
@@ -66,6 +67,26 @@
     }
 }
 
+#pragma mark - Events
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"EditLocation"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        LocationDetailsViewController *controller = (LocationDetailsViewController *)navigationController.topViewController;
+        controller.managedObjectContext = self.managedObjectContext;
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        Location *location = [locations objectAtIndex:indexPath.row];
+        
+        NSLog(@"location: %@", location);
+
+        
+        controller.locationToEdit = location;
+    }
+}
+
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -80,18 +101,5 @@
     return cell;
 }
 
-
-#pragma mark - Table view delegate
-
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // Navigation logic may go here. Create and push another view controller.
-//    /*
-//     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-//     // ...
-//     // Pass the selected object to the new view controller.
-//     [self.navigationController pushViewController:detailViewController animated:YES];
-//     */
-//}
 
 @end

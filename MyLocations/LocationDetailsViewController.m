@@ -20,6 +20,20 @@
 @synthesize placemark;
 
 @synthesize managedObjectContext;
+@synthesize locationToEdit;
+
+- (void)setLocationToEdit:(Location *)newLocationToEdit
+{
+    if (locationToEdit != newLocationToEdit) {
+        locationToEdit = newLocationToEdit;
+        
+        descriptionText = locationToEdit.locationDescription;
+        categoryName = locationToEdit.category;
+        coordinate = CLLocationCoordinate2DMake([locationToEdit.latitude doubleValue], [locationToEdit.longitude doubleValue]);
+        placemark = locationToEdit.placemark;
+        date = locationToEdit.date;
+    }
+}
 
 #pragma mark - View lifecycle
 
@@ -68,6 +82,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+        
+    if (self.locationToEdit != nil){
+        self.title = @"Edit Location";
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target: self action: @selector(done:)];
+    }
     
     self.descriptionTextView.text = descriptionText;
     self.categoryLabel.text = @"";
@@ -89,6 +108,8 @@
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:gestureRecognizer];
 }
+
+
 
 #pragma mark - UITableViewDelegate
 
@@ -180,11 +201,15 @@
 - (IBAction)done:(id)sender
 {
     HudView *hudView = [HudView hudInView:self.navigationController.view animated:YES];
-    hudView.text = @"Tagged";
+    Location *location = nil;
     
-    NSLog(@"ManagedObjectContext %@", managedObjectContext);
-    
-    Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
+    if (self.locationToEdit != nil){
+        hudView.text = @"Updated";
+        location = self.locationToEdit;
+    } else {
+        hudView.text = @"Tagged";
+        Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];  
+    }
     
     location.locationDescription = descriptionText;
     location.category = categoryName;
