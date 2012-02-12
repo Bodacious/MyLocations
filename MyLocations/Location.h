@@ -10,7 +10,7 @@
 
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
-@property (nonatomic, retain) id placemark;
+@property (nonatomic, retain) CLPlacemark *placemark;
 @property (nonatomic, retain) NSString * category;
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * locationDescription;
