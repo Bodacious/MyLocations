@@ -1,19 +1,25 @@
 #import "LocationDetailsViewController.h"
+#import "CategoryPickerViewController.h"
+#import "HudView.h"
+#import "Location.h"
 
-@implementation LocationDetailsViewController
-
-NSString *descriptionText;
+@implementation LocationDetailsViewController{
+    NSString *descriptionText;
+    NSString *categoryName;
+    NSDate *date;    
+}
 
 
 @synthesize descriptionTextView;
 @synthesize categoryLabel;
-@synthesize latitudeLabel;
-@synthesize longitudeLabel;
+@synthesize latitudeLabel, longitudeLabel;
 @synthesize addressLabel;
 @synthesize dateLabel;
 
 @synthesize coordinate;
 @synthesize placemark;
+
+@synthesize managedObjectContext;
 
 #pragma mark - View lifecycle
 
@@ -21,6 +27,8 @@ NSString *descriptionText;
 {
     if ((self = [super initWithCoder:aDecoder])) {
         descriptionText = @"";
+        categoryName = @"No Category";
+        date = [NSDate date];
     }
     return self;
 }
@@ -29,8 +37,8 @@ NSString *descriptionText;
 {
     [super viewDidUnload];
     
-    self.descriptionTextView = nil;
-    self.categoryLabel = nil;
+    self.descriptionTextView = descriptionText;
+    self.categoryLabel = categoryName;
     self.latitudeLabel = nil;
     self.longitudeLabel = nil;
     self.addressLabel = nil;
@@ -73,11 +81,32 @@ NSString *descriptionText;
     else{
         self.addressLabel.text = @"No Address Found";
     }
-        
-    self.dateLabel.text = [self formatDate:[NSDate date]];
+    self.dateLabel.text = [self formatDate:date];
+
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
+                                                 initWithTarget:self action:@selector(hideKeyboard:)];
+    
+    gestureRecognizer.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:gestureRecognizer];
 }
 
 #pragma mark - UITableViewDelegate
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 || indexPath.section == 1) {
+        return indexPath;
+    } else {
+        return nil;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        [self.descriptionTextView becomeFirstResponder];
+    }
+}
 
 - (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -111,8 +140,37 @@ NSString *descriptionText;
     descriptionText = theTextView.text;
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"PickCategory"]){
+        CategoryPickerViewController *controller = segue.destinationViewController;
+        controller.delegate = self;
+        controller.selectedCategoryName = categoryName;
+    } 
+}
+
+#pragma mark - CategoryPickerViewControllerDelegate
+
+- (void)categoryPicker:(CategoryPickerViewController *)picker didPickCategory:(NSString *)theCategoryName
+{
+    categoryName = theCategoryName;
+    self.categoryLabel.text = categoryName;
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - Custom Actions
+
+-(void)hideKeyboard:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint point = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    
+    if (indexPath != nil && indexPath.section == 0 && indexPath.row == 0) {
+        return;
+    }
+    
+    [self.descriptionTextView resignFirstResponder];
+}
 
 - (void)closeScreen
 {
@@ -121,11 +179,26 @@ NSString *descriptionText;
 
 - (IBAction)done:(id)sender
 {
-    NSLog(@"Description '%@'", descriptionText);
+    HudView *hudView = [HudView hudInView:self.navigationController.view animated:YES];
+    hudView.text = @"Tagged";
     
-    [self closeScreen];
+    Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
+    
+    location.locationDescription = descriptionText;
+    location.category = categoryName;
+    location.latitude = [NSNumber numberWithDouble:self.coordinate.latitude];
+    location.longitude = [NSNumber numberWithDouble:self.coordinate.longitude];
+    location.date = date;
+    location.placemark = self.placemark;
+    
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Error: %@", error);
+        abort();
+    }
+    
+    [self performSelector:@selector(closeScreen) withObject:nil afterDelay:0.6];
 }
-
 - (IBAction)cancel:(id)sender
 {
     [self closeScreen];

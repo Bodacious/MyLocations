@@ -22,6 +22,11 @@
 		8632A1A914E3120A00B57885 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8632A1A814E3120A00B57885 /* second@2x.png */; };
 		8649E8EB14E3B41E00445322 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8649E8EA14E3B41E00445322 /* CoreLocation.framework */; };
 		8649E8F714E45B4C00445322 /* LocationDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8649E8F614E45B4C00445322 /* LocationDetailsViewController.m */; };
+		86DF719614E5181900181A04 /* CategoryPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DF719514E5181900181A04 /* CategoryPickerViewController.m */; };
+		86DF719A14E5257D00181A04 /* HudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DF719914E5257D00181A04 /* HudView.m */; };
+		86DF719D14E52C0700181A04 /* Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 86DF719B14E52C0700181A04 /* Checkmark.png */; };
+		86DF719E14E52C0700181A04 /* Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86DF719C14E52C0700181A04 /* Checkmark@2x.png */; };
+		86DF71A014E56DF200181A04 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86DF719F14E56DF200181A04 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +52,13 @@
 		8649E8EA14E3B41E00445322 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8649E8F514E45B4C00445322 /* LocationDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailsViewController.h; sourceTree = "<group>"; };
 		8649E8F614E45B4C00445322 /* LocationDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailsViewController.m; sourceTree = "<group>"; };
+		86DF719414E5181900181A04 /* CategoryPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryPickerViewController.h; sourceTree = "<group>"; };
+		86DF719514E5181900181A04 /* CategoryPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryPickerViewController.m; sourceTree = "<group>"; };
+		86DF719814E5257D00181A04 /* HudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudView.h; sourceTree = "<group>"; };
+		86DF719914E5257D00181A04 /* HudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudView.m; sourceTree = "<group>"; };
+		86DF719B14E52C0700181A04 /* Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkmark.png; sourceTree = "<group>"; };
+		86DF719C14E52C0700181A04 /* Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Checkmark@2x.png"; sourceTree = "<group>"; };
+		86DF719F14E56DF200181A04 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86DF71A014E56DF200181A04 /* CoreData.framework in Frameworks */,
 				8649E8EB14E3B41E00445322 /* CoreLocation.framework in Frameworks */,
 				8632A18814E3120A00B57885 /* UIKit.framework in Frameworks */,
 				8632A18A14E3120A00B57885 /* Foundation.framework in Frameworks */,
@@ -67,7 +80,6 @@
 		8632A17814E3120A00B57885 = {
 			isa = PBXGroup;
 			children = (
-				8649E8EA14E3B41E00445322 /* CoreLocation.framework */,
 				8632A18D14E3120A00B57885 /* MyLocations */,
 				8632A18614E3120A00B57885 /* Frameworks */,
 				8632A18414E3120A00B57885 /* Products */,
@@ -85,6 +97,8 @@
 		8632A18614E3120A00B57885 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8649E8EA14E3B41E00445322 /* CoreLocation.framework */,
+				86DF719F14E56DF200181A04 /* CoreData.framework */,
 				8632A18714E3120A00B57885 /* UIKit.framework */,
 				8632A18914E3120A00B57885 /* Foundation.framework */,
 				8632A18B14E3120A00B57885 /* CoreGraphics.framework */,
@@ -104,11 +118,17 @@
 				8649E8F614E45B4C00445322 /* LocationDetailsViewController.m */,
 				8632A1A314E3120A00B57885 /* SecondViewController.h */,
 				8632A1A414E3120A00B57885 /* SecondViewController.m */,
+				86DF719414E5181900181A04 /* CategoryPickerViewController.h */,
+				86DF719514E5181900181A04 /* CategoryPickerViewController.m */,
 				8632A19F14E3120A00B57885 /* first.png */,
 				8632A1A114E3120A00B57885 /* first@2x.png */,
 				8632A1A614E3120A00B57885 /* second.png */,
 				8632A1A814E3120A00B57885 /* second@2x.png */,
 				8632A18E14E3120A00B57885 /* Supporting Files */,
+				86DF719814E5257D00181A04 /* HudView.h */,
+				86DF719914E5257D00181A04 /* HudView.m */,
+				86DF719B14E52C0700181A04 /* Checkmark.png */,
+				86DF719C14E52C0700181A04 /* Checkmark@2x.png */,
 			);
 			path = MyLocations;
 			sourceTree = "<group>";
@@ -181,6 +201,8 @@
 				8632A1A214E3120A00B57885 /* first@2x.png in Resources */,
 				8632A1A714E3120A00B57885 /* second.png in Resources */,
 				8632A1A914E3120A00B57885 /* second@2x.png in Resources */,
+				86DF719D14E52C0700181A04 /* Checkmark.png in Resources */,
+				86DF719E14E52C0700181A04 /* Checkmark@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +218,8 @@
 				8632A19E14E3120A00B57885 /* CurrentLocationViewController.m in Sources */,
 				8632A1A514E3120A00B57885 /* SecondViewController.m in Sources */,
 				8649E8F714E45B4C00445322 /* LocationDetailsViewController.m in Sources */,
+				86DF719614E5181900181A04 /* CategoryPickerViewController.m in Sources */,
+				86DF719A14E5257D00181A04 /* HudView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

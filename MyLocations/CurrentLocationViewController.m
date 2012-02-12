@@ -30,6 +30,7 @@ NSError *lastGeocodingError;
 @synthesize addressLabel;
 @synthesize latitudeLabel;
 @synthesize longitudeLabel;
+@synthesize managedObjectContext;
 
 - (void)didReceiveMemoryWarning
 {
@@ -45,8 +46,6 @@ NSError *lastGeocodingError;
 	// Do any additional setup after loading the view, typically from a nib.
     [self updateLabels];
     [self configureGetButton];
-    
-    
 }
 
 - (void)viewDidUnload
@@ -297,9 +296,10 @@ NSError *lastGeocodingError;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"TagLocation"]){
+    if ([segue.identifier isEqualToString:@"TagLocation"]) {
         UINavigationController *navigationController = segue.destinationViewController;
         LocationDetailsViewController *controller = (LocationDetailsViewController *)navigationController.topViewController;
+        controller.managedObjectContext = self.managedObjectContext;
         controller.coordinate = location.coordinate;
         controller.placemark = placemark;
     }

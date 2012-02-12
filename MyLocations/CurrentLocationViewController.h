@@ -15,6 +15,9 @@
 @property (nonatomic, strong) IBOutlet UIButton *tagButton;
 @property (nonatomic, strong) IBOutlet UIButton *getButton;
 
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+
+
 #pragma mark - Actions
 
 - (IBAction)getLocation:(id)sender;
